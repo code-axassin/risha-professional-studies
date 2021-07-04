@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <link rel="stylesheet" type="text/css" href="{% static 'styles/attendance_style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Attendance</title>
+    <div class="header">
+      <h1>{{class_obj}}</h1>
+    </div>
+</head>
+<body>
+
+    <div class="eval">
+        <div class="students ">
+            {% for student in students %}
+
+            {% if student.active %}
+                {% if student.has_paid %}
+                    <p>&#10003|<strong>{{student.name}}| {{student.father_name}}</strong></p>
+                    {% else %}
+                        <p>X|<strong>{{student.name}}| {{student.father_name}}</strong></p>
+                {% endif %}
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

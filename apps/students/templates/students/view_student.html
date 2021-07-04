@@ -1,0 +1,88 @@
+{% extends "frontpage/base.html" %}
+{% block content %}
+<div class="container" id="delete-student">
+        <div class="columns is-multiline">
+
+                <div class="column is-3 is-offset-2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4">{{ student.public_id }}|{{ student.name }}</p>
+                                </div>
+                                <a class="button is-danger"  @click="toggleDialog({{ student.id }})">Delete</a>
+                            </div>
+
+                            <div class="content">
+                                <ul>
+                                    <li>{% if student.has_paid %}
+                                            Has taken admission.
+                                        {% else %}
+                                            Hasn't taken admission.
+                                        {% endif %}</li>
+                                    <li>ID - {{ student.id }}</li>
+                                    <li>Public ID - {{ student.public_id }}</li>
+                                    <li>Father Name - {{ student.father_name }}</li>
+                                    <li>Date - {{ student.admission_date }}</li>
+                                </ul><hr>
+                                <ol>Classes : {% for class in student.classes.all %}<li>{{ class.name}}-{{ class.staff}}-{{ class.timing}}</li>{% endfor %}</ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+            <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Are you sure?</p>
+                        <button class="delete" aria-label="close" @click="showDialog = !showDialog"></button>
+                    </header>
+
+                    <section class="modal-card-body">
+                        Are you sure you want to delete this Student?
+                    </section>
+
+                        <footer class="modal-card-foot">
+                        <button class="button is-success" @click="deleteStudent()">Yes, delete</button>
+                        <button class="button" @click="showDialog = !showDialog">Cancel</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+{% block scripts %}
+<script>
+    new Vue({
+        el: '#delete-student',
+        delimiters: ["[[", "]]"],
+        data () {
+            return {
+                showDialog:false,
+                student_id:0
+
+            }
+        },
+        methods: {
+            toggleDialog(id) {
+                this.student_id = id
+                this.showDialog = true
+            },
+            deleteStudent(){
+                axios.post("/students/api/delete_student/" + this.student_id + "/")
+                    .then((response) => {
+                        console.log(response)
+                        this.showDialog = false
+                        window.location.href = '/students/'
+                    })
+                    .catch((function (error) {
+                        console.log(error)
+                    }))
+            }
+        }
+    })
+</script>
+{% endblock scripts %}

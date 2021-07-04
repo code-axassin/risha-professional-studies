@@ -1,0 +1,39 @@
+{% extends "frontpage/baseLogin.html" %}
+{% load static %}
+
+{%  block content %}
+<center><img class="" src="{% static 'images/logo.jpg' %}" width="20%"></center>
+<div class="column is-2 is-offset-5 mt-6">
+    <div class="card">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-content">
+                    <center><p class="title is-1">Log In</p></center>
+                </div>
+            </div>
+
+            <div class="content">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="field">
+                        <center><label class="label">Username</label></center>
+                        <input class="input" type="text" name="username" placeholder="Username">
+                    </div>
+
+                    <div class="field">
+                        <center><label class="label">Password</label></center>
+                        <input class="input" type="password" name="password" placeholder="Password">
+                    </div>
+
+                    <div class="field is-grouped">
+                        <center><div class="control">
+                            <button type="submit" class="button is-dark">Login</button>
+                            <a href="{% url 'frontpage' %}" class="button is-danger">Cancel</a>
+                        </div></center>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%  endblock content %}

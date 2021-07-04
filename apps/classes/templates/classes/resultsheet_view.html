@@ -1,0 +1,37 @@
+{% extends 'frontpage/attendance_base.html' %}
+{% load static %}
+{% block content %}
+        <h1 style="margin-left:14rem;" class="company-name">Risha Professional Studies</h1>
+        <p style="margin-left:3rem;">Instructor : {{class_obj.staff}} ~|~ Class : {{class_obj.name}} ~|~ Room : {{class_obj.rom_no}}| S: {{class_obj.start}} ~|~ E: {{class_obj.end}} | Timing:{{class_obj.timing}}</p>
+        <table style="float:right;" class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Father Name</th>
+              <th scope="col">Mid Term</th>
+              <th scope="col">Final Term</th>
+              <th scope="col">Workbook/H.W</th>
+              <th scope="col">Evaluation</th>
+              <th scope="col">Total</th>
+              <th scope="col">Position</th>
+              </tr>
+          </thead>
+          <tbody>
+          {% for student in students %}
+              <tr>
+                <th><a href="{% url 'edit_student' student.id %}">{% if student.has_paid %} &#10003 {{student.public_id}} {% else %} X {{student.public_id}} {% endif %}</a></th>
+                <td><a href="{% url 'bill_view' student_id=student.id class_id=class_obj.id %}">{{student.name}}</a></td>
+                <td>{{student.father_name}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+{% endblock content %}

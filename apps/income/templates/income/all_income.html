@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    </head>
+     <body>
+        <center><h1 class="title mt-3">Income Table</h1></center>
+        <table id="countit" class="table table is-bordered is-narrow is-hoverable is-fullwidth mt-6 ml-3 mr-3 mb-3">
+            <tbody>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                  </tr>
+               {% for income in incomes %}
+                  <tr>
+                    <th>{{income.student.public_id}}|{{income.student.name}}|{{income.student.father_name}}|Admitted by - {{income.user.username}}</th>
+                    <td class="count-me">{{income.amount}}</td>
+                    <td >{{income.date_added}}</td>
+                  </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+
+     {% load i18n %}
+        {% if is_paginated %}
+            <nav class="pagination is-centered">
+              {% if page_obj.has_previous %}
+                <a class="pagination-previous" href="?page=
+                    {{ page_obj.previous_page_number|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{% trans "Previous" %}</a>
+              {% else %}
+                <a class="pagination-previous" disabled>{% trans "Previous" %}</a>
+              {% endif %}
+
+              {% if page_obj.has_next %}
+                <a class="pagination-next"
+                   href="?page={{ page_obj.next_page_number|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{% trans "Next" %}</a>
+              {% else %}
+                <a class="pagination-next" disabled>{% trans "Next" %}</a>
+              {% endif %}
+
+              <ul class="pagination-list">
+                {% for page in paginator.page_range %}
+                  <li><a class="pagination-link{% ifequal page page_obj.number %} is-current{% endifequal %}"
+                         href="?page={{ page|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{{ page|stringformat:"d" }}</a></li>
+                {% endfor %}
+              </ul>
+            </nav>
+        {% endif %}
+     </body>
+    </html>
+
+<script language="javascript" type="text/javascript">
+    var tds = document.getElementById('countit').getElementsByTagName('td');
+    var sum = 0;
+    for(var i = 0; i < tds.length; i ++) {
+        if(tds[i].className == 'count-me') {
+            sum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+        }
+    }
+    document.getElementById('countit').innerHTML += '<tr><th>Total</th><th>' + sum +' Afg</th></tr>';
+</script>
+<style>
+
+body {
+  background-image: linear-gradient(to right, deepskyblue , lightblue);
+  margin: 0;
+  padding: 0;
+}
+.table {
+    background-image: linear-gradient(to bottom right, deepskyblue, white);
+}
+</style>

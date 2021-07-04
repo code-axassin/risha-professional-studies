@@ -1,0 +1,90 @@
+{% extends "frontpage/base.html" %}
+
+{% block content %}
+        <div class="container">
+                <h1 class="title">Edit - {{student.public_id}}</h1>
+            <form method="post" action="{% url 'edit_student_save' student.id %}" role="form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <label class="label">Active</label>
+                <div class="select is-primary">
+                    <select class="select is-primary" name="active">
+                          <option value="True" {% if student.active == True %} selected {% endif %}>Yes</option>
+                          <option value="False" {% if student.active == False %} selected {% endif %}>No</option>
+                    </select>
+                   </div>
+                <br>
+                <br>
+                <div class="field">
+                    <label class="label">Student Name</label>
+                    <input class="input" type="text" name="name" placeholder="Name" value="{{student.name}}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Father Name</label>
+                    <input class="input" type="text" name="father_name" placeholder="Father Name" value="{{student.father_name}}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Gender</label>
+                    <input class="input" type="text" name="gender" placeholder="Gender" value="{{student.gender}}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Contact *numbers only!</label>
+                     <input class="input" type="text" name="contact" placeholder="Contact" value="{{student.contact}}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Father's Contact *numbers only!</label>
+                    <input class="input" type="text" name="father_contact" placeholder="Father Contact" value="{{student.father_contact}}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Fee *numbers only!</label>
+                    <input class="input" type="text" name="fee" placeholder="Fee" value="{{student.fee}}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Address</label>
+                    <input class="input" type="text" name="address" placeholder="Address" value="{{student.address}}">
+                </div>
+
+                   <div class="select is-multiple ">
+                    <label class="label">Class/Classes</label>
+                    <select multiple size="10" name="classes">
+                        {% for class in classes %}
+                            <option value="{{ class.id }}" {% if class in student.classes.all %} selected {% endif %}>{{ class.name }}|{{ class.timing }}|{{ class.staff.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                   </div>
+                 <div class="field">
+                    <label class="label">Admission Date</label>
+                     <input class="input" type="date" name="admission_date" placeholder="Admission Date" value="{{student.admission_date|date:'Y-m-d'}}">
+                </div>
+                 <div class="field">
+                    <label class="label">Admission End Date</label>
+                     <input class="input" type="date" name="admission_end" placeholder="Admission End Date" value="{{student.admission_end|date:'Y-m-d'}}">
+                 </div>
+                 <div class="field">
+                    <label class="label">Comments</label>
+                     <input class="input" name="comments" placeholder="Comments" value="{{ student.comments }}"/>
+                </div>
+                <div class="field">
+                    <a href="/images/{{ student.image }}">Current Profile Image</a>
+                    <input class="file" type="file" name="image">
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-primary">Update Student</button>
+                        <a href="{% url 'all_students' %}" class="button is-danger">Cancel</a>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+</div>
+
+{% endblock content %}

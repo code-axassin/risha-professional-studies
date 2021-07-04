@@ -1,0 +1,83 @@
+{% extends "frontpage/base.html" %}
+{% block content %}
+<div class="container" id="delete-class">
+    <div class="columns is-multiline">
+        <div class="column is-3 is-offset-2">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">{{ class_obj.name }}</p>
+                        </div>
+                        <a class="button is-danger" @click="toggleDialog({{ class_obj.id }})">Delete</a>
+                    </div>
+                    <div class="content">
+                        <ul>
+                            <li>Staff - {{ class_obj.staff.name }}</li>
+                            <li>Timing - {{ class_obj.timing }}</li>
+                            <li>{{ class_obj.start }} - {{ class_obj.end }}</li>
+                        </ul>
+                        <h5>Students:</h5>
+                        <ol>
+                            {% for student in students %}
+                                <li>{{ student.name }} - {{ student.father_name }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+
+                </div>
+        </div>
+    </div>
+    <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Are you sure?</p>
+                    <button class="delete" aria-label="close" @click="showDialog = !showDialog"></button>
+                </header>
+
+                <section class="modal-card-body">
+                    Are you sure you want to delete this class?
+                </section>
+
+                    <footer class="modal-card-foot">
+                    <button class="button is-success" @click="deleteClass()">Yes, delete</button>
+                    <button class="button" @click="showDialog = !showDialog">Cancel</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script>
+    new Vue({
+        el: '#delete-class',
+        delimiters: ["[[", "]]"],
+        data () {
+            return {
+                showDialog:false,
+                class_id:0
+
+            }
+        },
+        methods: {
+            toggleDialog(id) {
+                this.class_id = id
+                this.showDialog = true
+            },
+            deleteClass(){
+                axios.post("/classes/api/delete_class/" + this.class_id + "/")
+                    .then((response) => {
+                        console.log(response)
+                        this.showDialog = false
+                        window.location.href = '/classes/'
+                    })
+                    .catch((function (error) {
+                        console.log(error)
+                    }))
+            }
+        }
+    })
+</script>
+{% endblock scripts %}

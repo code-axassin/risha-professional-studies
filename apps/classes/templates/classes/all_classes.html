@@ -1,0 +1,87 @@
+{% extends "frontpage/base.html" %}
+{% block content %}
+<div class="container">
+        <div class="columns is-multiline">
+            <div class="column is-12">
+                <center><h1 class="title">Classes ({{ classes.all.count }})<hr> <a href="{% url 'add_class' %}" class="button is-primary">Add Class</a></h1></center>
+                    <br>
+                    <center><div>
+                    <form method="GET" action="{% url 'class_search' %}">
+                       <input name="query" class="input" type="search" placeholder="Search by Class Name or ID...." aria-label="Search">
+                        <br>
+                        <br>
+                       <button class="button is-info" type="submit">Search</button>
+                    </form>
+                    </div></center>
+                    <br>
+            </div>
+
+                <div class="column is-10 is-offset-1">
+                    <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Staff</th>
+                                <th>Timing</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Attendance</th>
+                                <th>Evaluation</th>
+                                <th>Result Sheet</th>
+                                <th>Contact Sheet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for class in classes %}
+                                <tr>
+                                    <td>{{ class.id }}</td>
+                                    <td>{{ class.name }}</td>
+                                    <td>{{ class.staff.name }}</td>
+                                    <td>{{ class.timing }}</td>
+                                    <td>{{ class.start }}</td>
+                                    <td>{{ class.end }}</td>
+                                    <td><a class="button is-primary" href="{% url 'view_class' class.id %}">View</a></td>
+                                    <td><a class="button is-warning" href="{% url 'edit_class' class.id %}">Edit</a></td>
+
+                                    <td><a class="button is-primary" href="{% url 'attendance_view' class.id %}">Attendance</a></td>
+                                    <td><a class="button is-primary" href="{% url 'evaluation_view' class.id %}">Evaluation</a></td>
+                                    <td><a class="button is-info" href="{% url 'resultsheet_view' class.id %}">Result Sheet</a></td>
+                                    <td><a class="button is-info" href="{% url 'contactsheet_view' class.id %}">Contact Sheet</a></td>
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+    {% load i18n %}
+
+{% if is_paginated %}
+<nav class="pagination is-centered">
+  {% if page_obj.has_previous %}
+    <a class="pagination-previous" href="?page=
+        {{ page_obj.previous_page_number|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{% trans "Previous" %}</a>
+  {% else %}
+    <a class="pagination-previous" disabled>{% trans "Previous" %}</a>
+  {% endif %}
+
+  {% if page_obj.has_next %}
+    <a class="pagination-next"
+       href="?page={{ page_obj.next_page_number|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{% trans "Next" %}</a>
+  {% else %}
+    <a class="pagination-next" disabled>{% trans "Next" %}</a>
+  {% endif %}
+
+  <ul class="pagination-list">
+    {% for page in paginator.page_range %}
+      <li><a class="pagination-link{% ifequal page page_obj.number %} is-current{% endifequal %}"
+             href="?page={{ page|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{{ page|stringformat:"d" }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endif %}
+{% endblock content %}

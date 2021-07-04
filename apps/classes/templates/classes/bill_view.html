@@ -1,0 +1,135 @@
+{% load static %}
+
+{% if student.has_paid %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/bill.css' %}">
+
+        {% if title %}
+            <title>Risha - {{ title }}</title>
+        {% else %}
+            <title>Risha</title>
+        {% endif %}
+    </head>
+    <body>
+    <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="bill">
+                        <div>
+                            <h1 class="cname">Risha Professional Studies</h1>
+                            <div class="details">
+                                <strong class="s-id">ID : {{student.public_id}}</strong>
+                                <p class="address">Address: Aino - Mena, 12 ST</p>
+                                <p class="phone">Contact Us: 0700333044</p>
+                                <h1 class="s-name">{{student.name}} | SO/DO : {{student.father_name}}</h1>
+                                <h1 class="c-name">{{class_obj.name}} || Timing : {{class_obj.timing}} || Instructor : {{class_obj.staff.name}}</h1>
+                                <p class="c-fee">{{student.fee}} Afg</p>
+                                    <h5 class="fee" id="date"></h5>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+<script>
+    n =  new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+</script>
+{% else %}
+<!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    </head>
+    <body>
+    <div class="container" id="add-amount">
+        <div class="columns is-multiline mt-5">
+             <div class="column is-12">
+                <center><h1 class="title">Cant't show student's bill until amount is added!</h1></center>
+            </div>
+                <div class="column is-5 is-offset-4">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4">Name - {{ student.name }}</p>
+                                </div>
+                                <a class="button is-primary"  @click="toggleDialog({{ student.id }},{{ class_obj.id }})">Add Amount</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+            <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Are you sure?</p>
+                        <button class="delete" aria-label="close" @click="showDialog = !showDialog"></button>
+                    </header>
+
+                    <section class="modal-card-body">
+                        Are you sure you want to add the amount for this Student?
+                    </section>
+
+                        <footer class="modal-card-foot">
+                        <button class="button is-success" @click="addAmount()">Yes</button>
+                        <button class="button" @click="showDialog = !showDialog">Cancel</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    new Vue({
+        el: '#add-amount',
+        delimiters: ["[[", "]]"],
+        data () {
+            return {
+                showDialog:false,
+                student_id:0,
+                class_id:0,
+
+            }
+        },
+        methods: {
+            toggleDialog(student_id,class_id) {
+                this.student_id = student_id
+                this.class_id = class_id
+                this.showDialog = true
+            },
+            addAmount(){
+                axios.post("/classes/api/add_amount/" + this.student_id + "/" + this.class_id + "/")
+                    .then((response) => {
+                        console.log(response)
+                        this.showDialog = false
+                        window.location.href = '/students/'
+                    })
+                    .catch((function (error) {
+                        console.log(error)
+                    }))
+            }
+        }
+    })
+    </script>
+    </body>
+{% endif %}

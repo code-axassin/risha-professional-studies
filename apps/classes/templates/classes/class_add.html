@@ -1,0 +1,55 @@
+{% extends "frontpage/base.html" %}
+
+{% block content %}
+        <div class="container">
+                <h1 class="title">Add a New Class</h1>
+            <form method="post" action="{% url 'add_class_save' %}" role="form">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label class="label">Class Name</label>
+                    <input class="input" type="text" name="name" placeholder="Class Name">
+                </div>
+
+                <div class="field">
+                    <label class="label">Room No.</label>
+                    <input class="input" type="text" name="rom_no" placeholder="Room No.">
+                </div>
+
+                <div class="field">
+                    <label class="label">Time</label>
+                    <input class="input" type="time" name="timing" placeholder="Timing">
+                </div>
+
+                <div class="field">
+                    <label class="label">Start Date</label>
+                     <input class="input" type="date" name="start" placeholder="Start Date">
+                </div>
+
+                <div class="field">
+                    <label class="label">End Date</label>
+                    <input class="input" type="date" name="end" placeholder="End Date">
+                </div>
+
+                <label class="label">Instructor</label>
+                <div class="select is-primary">
+                    <select class="" name="staff">
+                        {% for staff in staffs %}
+                          <option value="{{ staff.id }}">{{ staff.name }}</option>
+                        {% endfor %}
+                    </select>
+                   </div>
+                <hr>
+                <div class="field is-grouped">
+                    <div>
+                        <button type="submit" class="button is-primary">Add Class</button>
+                        <a href="{% url 'all_classes' %}" class="button is-danger">Cancel</a>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+</div>
+
+{% endblock content %}

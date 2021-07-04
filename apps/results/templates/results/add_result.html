@@ -1,0 +1,50 @@
+{% extends "frontpage/base.html" %}
+
+{% block content %}
+        <div class="container">
+                <h1 class="title">Add Result for {{student.name}}</h1>
+            <form method="post" action="{% url 'add_result_save' %}" role="form">
+                {% csrf_token %}
+
+                <div class="select is-primary">
+                    <select class="" name="student">
+                          <option value="{{ student.id }}">{{ student.name }}|{{ student.father_name }}</option>
+                    </select>
+                </div>
+
+                <div class="select is-primary">
+                    <select class="" name="class_name">
+                          <option value="{{ class_obj.id }}">{{ class_obj.name }}|{{ class_obj.staff.name }}|{{ class_obj.timing }}</option>
+                    </select>
+                </div>
+                <br>
+                <br>
+                <div class="field">
+                    <label class="label">Date</label>
+                     <input class="input" type="date" name="date" placeholder="Date">
+                </div>
+
+                <div class="field">
+                    <label class="label">Marks *numbers only!</label>
+                     <input class="input" type="number" name="marks" placeholder="Marks">
+                </div>
+
+                <div class="field">
+                    <label class="label">Position</label>
+                     <input class="input" type="text" name="position" placeholder="Position">
+                </div>
+
+                <hr>
+                <div class="field is-grouped">
+                    <div>
+                        <button type="submit" class="button is-primary">Add Result</button>
+                        <a href="{% url 'view_result_students' class_obj.id%}" class="button is-danger">Cancel</a>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "frontpage/baseLogin.html" %}
+
+{%  block content %}
+<div class="column is-2 is-offset-5 mt-4">
+    <div class="card">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-content">
+                    <center><p class="title is-4">You have been logged out!</p></center>
+                </div>
+            </div>
+            <div class="content">
+                <center><a href="{% url 'login' %}">Log in again?</a></center>
+            </div>
+        </div>
+    </div>
+</div>
+{%  endblock content %}

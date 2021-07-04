@@ -1,0 +1,92 @@
+{% extends "frontpage/base.html" %}
+
+{% block content %}
+        <div class="container">
+                <h1 class="title">Add a New Student</h1>
+            <form method="post" action="{% url 'add_student_save' %}" role="form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label class="checkbox" >
+                        <input type="checkbox" name="active" checked>
+                        Active
+                    </label>
+                </div>
+                <div class="field">
+                    <label class="label">Name</label>
+                    <input class="input" type="text" name="name" placeholder="Name">
+                </div>
+
+                <div class="field">
+                    <label class="label">Father Name</label>
+                    <input class="input" type="text" name="father_name" placeholder="Father Name">
+                </div>
+
+                <div class="field">
+                    <label class="label">Gender</label>
+                    <input class="input" type="text" name="gender" placeholder="Gender">
+                </div>
+
+                <div class="field">
+                    <label class="label">Contact *numbers only!</label>
+                     <input class="input" type="text" name="contact" placeholder="Contact">
+                </div>
+
+                <div class="field">
+                    <label class="label">Father's Contact *numbers only!</label>
+                    <input class="input" type="text" name="father_contact" placeholder="Father Contact">
+                </div>
+
+                <div class="field">
+                    <label class="label">Fee *numbers only!</label>
+                    <input class="input" type="text" name="fee" placeholder="Fee" value="{{student.fee}}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Address</label>
+                    <input class="input" type="text" name="address" placeholder="Address">
+                </div>
+
+                   <div class="select is-multiple ">
+                    <label class="label">Class/Classes</label>
+                    <select multiple size="8" name="classes">
+                        {% for class in classes %}
+                          <option value="{{ class.id }}">{{ class.name }}|{{ class.timing }}|{{ class.staff.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                   </div>
+
+                 <div class="field">
+                    <label class="label">Admission Date</label>
+                     <input class="input" type="date" name="admission_date" placeholder="Admission Date">
+                </div>
+
+                 <div class="field">
+                    <label class="label">Admission End Date</label>
+                     <input class="input" type="date" name="admission_end" placeholder="Admission End Date">
+                </div>
+
+                 <div class="field">
+                    <label class="label">Comments</label>
+                     <textarea class="input" name="comments" placeholder="Comments"></textarea>
+                </div>
+
+                <div class="field">
+                    <label class="label">Profile Image</label>
+                     <input class="input" type="file" name="image">
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-primary">Add Student</button>
+                        <a href="{% url 'all_students' %}" class="button is-danger">Cancel</a>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+</div>
+
+{% endblock content %}

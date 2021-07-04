@@ -1,0 +1,53 @@
+{% extends "frontpage/base.html" %}
+
+{% block content %}
+        <div class="container">
+                <h1 class="title">Edit - {{ class_obj.name }}</h1>
+            <form method="post" action="{% url 'edit_class_save' class_obj.id %}" role="form">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label class="label">Name</label>
+                    <input class="input" type="text" name="name" placeholder="Class Name" value="{{ class_obj.name }}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Room</label>
+                    <input class="input" type="text" name="rom_no" placeholder="Room No." value="{{ class_obj.rom_no }}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Current Time</label>
+                    <input class="input" type="time" name="timing" placeholder="Timing" value="{{ class_obj.timing|time:'H:i' }}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Current Start</label>
+                    <input class="input" type="date" name="start" value="{{class_obj.start|date:'Y-m-d'}}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Current End</label>
+                    <input class="input" type="date" name="end" value="{{class_obj.end|date:'Y-m-d'}}">
+                </div>
+
+                   <div class="select is-primary">
+                    <label class="label">Instructor</label>
+                    <select class="select is-primary" name="staff">
+                        {% for staff in staffs %}
+                          <option value="{{ staff.id }}" {% if class_obj.staff.id == staff.id %} selected {% endif %}>{{ staff.name }}</option>
+                        {% endfor %}
+                    </select>
+                   </div>
+                 <hr>
+                <div class="field is-grouped">
+                    <div>
+                        <button type="submit" class="button is-primary">Edit Class</button>
+                        <a href="{% url 'all_classes' %}" class="button is-danger">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+</div>
+
+{% endblock content %}

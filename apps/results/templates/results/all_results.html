@@ -1,0 +1,102 @@
+{% extends "frontpage/base.html" %}
+{% block content %}
+<div class="container" id="delete-result">
+        <div class="columns is-multiline">
+            <div class="column is-12">
+                <center><h1 class="title">All Results<hr><a class="button is-info" href="{% url 'print_view' class_obj.id %}">Print View</a></h1></center>
+                <hr>
+                <br>
+                    <center><div>
+                    <form method="GET" action="{% url 'result_search' %}">
+                       <input name="query" class="input" type="search" placeholder="Search by Student's Public Id" aria-label="Search">
+                        <br>
+                        <br>
+                       <button class="button is-info" type="submit">Search</button>
+                    </form>
+                    </div></center>
+                    <br>
+            </div>
+
+                {% for result in results %}
+                <div class="column is-3 is-offset-2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4">{{ result.student.name }}</p>
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <ul>
+                                <hr>
+                                <a class="button is-warning" href="{% url 'update_result' result.id %}">Update</a>
+                                <a class="button is-danger" @click="toggleDialog({{ result.id }},{{result.class_name.id}})">Delete</a>
+                                 <hr>
+                                    <li>Public ID : {{ result.student.public_id }}</li>
+                                    <li>Father Name : {{ result.student.father_name }}</li>
+                                    <li>{{ result.class_name.name }}|{{ result.class_name.staff }}</li>
+                                    <li>Marks : {{ result.marks }}</li>
+                                    <li>Position : {{ result.position }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+        </div>
+    <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Are you sure?</p>
+                    <button class="delete" aria-label="close" @click="showDialog = !showDialog"></button>
+                </header>
+
+                <section class="modal-card-body">
+                    Are you sure you want to delete this result?
+                </section>
+
+                    <footer class="modal-card-foot">
+                    <button class="button is-success" @click="deleteResult()">Yes, delete</button>
+                    <button class="button" @click="showDialog = !showDialog">Cancel</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+    <script>
+        new Vue({
+            el: '#delete-result',
+            delimiters: ['[[',']]'],
+            data () {
+                return {
+                showDialog:false,
+                result_id:0,
+                }
+            },
+
+            methods: {
+                toggleDialog(result_id,class_id) {
+                    this.result_id = result_id
+                    this.class_id = class_id
+                    this.showDialog = true
+                },
+
+                deleteResult(){
+                    axios.post("/results/api/delete_result/" + this.result_id + "/")
+                        .then((response) => {
+                            console.log(response)
+                            this.showDialog = false
+                            window.location.href = '/results/results/' + this.class_id + "/"
+                        })
+                        .catch((function (error) {
+                           console.log(error)
+                        }))
+                }
+            }
+        })
+    </script>
+{% endblock scripts %}

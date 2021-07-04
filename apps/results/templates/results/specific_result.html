@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+     <link rel="stylesheet" type="text/css" href="{% static 'styles/specific_result.css' %}">
+
+
+    {% if title %}
+        <title>Risha - {{ title }}</title>
+    {% else %}
+        <title>Risha</title>
+    {% endif %}
+</head>
+<body>
+    {% for result in page_obj %}
+        <div class="content r_logo">
+            <form>
+            <fieldset class="">
+                <img src="{% static 'images/logo.jpg' %}" style="float:left; width:150px;">
+                <img src="{% static 'images/wiz.jpg' %}" style="float:right; width:90px;">
+                <br>
+                <br>
+                <br>
+                <br>
+                <h1 style="color:black; text-align:center;" class="logo_text">RISHA PROFESSIONAL STUDIES</h1>
+                <h2 style="color:black; text-align:center; font-size:25px; font-family:'Copperplate'">Kandahar, Afghanistan</h2>
+                    <div class="media-body">
+                            <h5 class="mr-2" style="text-align:right; font-size:21px; font-family:'Copperplate'">Date : {{result.date}}</h5>
+                            <h5 style="color:black; text-align:center; font-size:19px; font-family:'Segoe Print'" class="form-group">Name : {{result.student.name}}</h5>
+                            <h5 style="color:black; text-align:center; font-size:19px; font-family:'Segoe Print'" class="form-group">Father Name : {{result.student.father_name}}</h5>
+                            <h5 style="color:black; text-align:center; font-size:19px; font-family:'Segoe Print'" class="form-group">Class : {{result.class_name.name}}</h5>
+                            <h5 class="mr-2" style="color:black; text-align:center; font-size:19px; font-family:'Segoe Print'">Marks : {{result.marks}}</h5>
+                            <h5 class="mr-2" style="color:black; text-align:center; font-size:19px; font-family:'Segoe Print'">Position : {{result.position}}</h5>
+                            <h5 style="color:black; text-align:center; font-size:19px; font-family:'Segoe Print'" class="form-group">Class Duration : 2 Months</h5>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="float:right; font-size:19px; font-family:'Lucida Handwriting'" class="form-group">Instructor</p>
+                            <p style="float:left; font-size:19px; font-family:'Lucida Handwriting';" class="form-group">Director</p>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="float:left; font-size:14px; font-family:'Lucida Handwriting'" class="form-group"><strong>Phone : 0700333044</strong></p>
+                            <p style="float:right; font-size:14px; font-family:'Lucida Handwriting'" class="form-group"><strong>Address: Aino - Mena, 12 ST</strong></p>
+                    </div>
+            </fieldset>
+            </form>
+            </div>
+
+    {% endfor %}
+</body>
+</html>
+<center>
+        {%if page_obj.has_previous %} {# whether the previous page exists #}
+            <a class="pagination-previous" href="?page={{page_obj.previous_page_number}}"><</a> {# link to the prev page #}
+        {% endif %}
+        <span class="pagination-link is-current">{{page_obj.number}}</span> {# the current page number #}
+
+        {%if page_obj.has_next %} {# whether the next page exists #}
+            <a class="pagination-next" href="?page={{page_obj.next_page_number}}">></a> {# link to the next page #}
+        {% endif %}
+</center>
+
+

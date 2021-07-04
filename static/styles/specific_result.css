@@ -1,0 +1,26 @@
+
+.content{
+    width:1060px;
+    height:730px;
+    border-style:ridge;
+    border-radius:0px;
+    border-width:10px;
+    border-color:deepskyblue;
+
+
+}
+
+.r_logo {
+    background-image:url("r_logo.jpg");
+
+    background-repeat:space;
+}
+.logo_text {
+    font-size:30px;
+    font-family:"Lucida Handwriting",Copperplate;
+
+}
+
+@page{
+    size:auto;
+}

@@ -1,0 +1,32 @@
+
+.eval{
+    height:12in;
+    width: 12in;
+    padding:1rem 0 1rem 0;
+    background-repeat:no-repeat;
+    background-size:1140px 790px;
+    background-image:url("evaluation_sheet.png");
+}
+
+.students{
+    line-height:11px;
+    position:relative;
+    font-size:1rem;
+    margin-top:.8in;
+    margin-left:.5rem;
+    font-family:Calibri Light;
+}
+
+.header {
+  padding:0px;
+  margin:0px;
+  text-align: center;
+  background: deepskyblue;
+  color: black;
+  font-size: 9px;
+}
+
+
+@page{
+    size:auto;
+}

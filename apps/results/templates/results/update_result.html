@@ -1,0 +1,37 @@
+{% extends "frontpage/base.html" %}
+
+{% block content %}
+        <div class="container">
+                <h1 class="title">Update Result for {{result.student.name}}</h1>
+            <form method="post" action="{% url 'update_result_save' result.id %}" role="form">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label class="label">Date</label>
+                     <input class="input" type="date" name="date" placeholder="Date" value="{{ result.date|date:'Y-m-d' }}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Marks *numbers only!</label>
+                     <input class="input" type="number" name="marks" placeholder="Marks" value="{{ result.marks }}">
+                </div>
+
+                <div class="field">
+                    <label class="label">Position</label>
+                     <input class="input" type="text" name="position" placeholder="Position" value="{{ result.position }}">
+                </div>
+
+                <hr>
+                <div class="field is-grouped">
+                    <div>
+                        <button type="submit" class="button is-primary">Add Result</button>
+                        <a href="{% url 'view_results' result.class_name.id %}" class="button is-danger">Cancel</a>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+</div>
+
+{% endblock content %}

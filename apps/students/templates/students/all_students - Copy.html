@@ -1,0 +1,81 @@
+{% extends "frontpage/base.html" %}
+{% block content %}
+<div class="container">
+        <div class="columns is-multiline">
+            <div class="column is-12">
+                <center><h1 class="title">Students ({{ students.all.count }})<hr> <a href="{% url 'add_student' %}" class="button is-primary">Add Student</a></h1></center>
+                <br>
+                <center><div>
+                    <form method="GET" action="{% url 'student_search' %}">
+                       <input name="query" class="input" type="search" placeholder="Search by Student Name or ID...." aria-label="Search">
+                        <br>
+                        <br>
+                       <button class="button is-info" type="submit">Search</button>
+                    </form>
+                </div></center>
+                <br>
+            </div>
+                {% for student in students %}
+
+                <div class="column is-3 is-offset-2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4">Name - {{ student.name }}</p>
+                                </div>
+                                </div>
+
+                            <div class="content">
+                                <ul>
+                                    <hr>
+                                    <a class="button is-primary" href="{% url 'view_student' student.id %}">Visit</a><a class="button is-primary" href="{% url 'view_student' student.id %}">Visit</a>
+                                    <a class="button is-warning" href="{% url 'edit_student' student.id%}">Edit</a>
+                                    <a class="button is-info" href="{% url 'bill_list' student.id%}">Bill</a>
+                                    <hr>
+                                    <li>{% if student.has_paid %}
+                                            Has taken admission.
+                                        {% else %}
+                                            Hasn't taken admission.
+                                        {% endif %}</li>
+                                    <li>ID - {{ student.id }}</li>
+                                    <li>Public ID - {{ student.public_id }}</li>
+                                    <li>Father Name - {{ student.father_name }}</li>
+                                    <li>Date - {{ student.admission_date }} - {{ student.admission_end }}</li>
+                                </ul><hr>
+                                <ol>Classes : {% for class in student.classes.all %}<li>{{ class.name}}-{{ class.timing}}-{{ class.staff.name}}</li>{% endfor %}</ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+        </div>
+    </div>
+    {% load i18n %}
+
+{% if is_paginated %}
+<nav class="pagination is-centered">
+  {% if page_obj.has_previous %}
+    <a class="pagination-previous" href="?page=
+        {{ page_obj.previous_page_number|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{% trans "Previous" %}</a>
+  {% else %}
+    <a class="pagination-previous" disabled>{% trans "Previous" %}</a>
+  {% endif %}
+
+  {% if page_obj.has_next %}
+    <a class="pagination-next"
+       href="?page={{ page_obj.next_page_number|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{% trans "Next" %}</a>
+  {% else %}
+    <a class="pagination-next" disabled>{% trans "Next" %}</a>
+  {% endif %}
+
+  <ul class="pagination-list">
+    {% for page in paginator.page_range %}
+      <li><a class="pagination-link{% ifequal page page_obj.number %} is-current{% endifequal %}"
+             href="?page={{ page|stringformat:"d" }}{{ getvars }}{{ hashtag }}">{{ page|stringformat:"d" }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endif %}
+{% endblock content %}

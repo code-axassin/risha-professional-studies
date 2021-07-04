@@ -1,0 +1,68 @@
+{% extends "frontpage/base.html" %}
+{% block content %}
+    <div class="container" id="delete-class">
+        {% if class_name %}
+        {% for class in class_name%}
+        <div class="columns is-multiline">
+                <div class="column is-3 is-offset-2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4">ID : {{ class.id }}|Class : {{ class.name }}</p>
+                                    <hr>
+                                    <a class="button is-primary" href="{% url 'view_result_students' class.id %}">Students</a>
+                                    <a class="button is-warning" href="{% url 'view_results' class.id %}">View Results</a>
+                                <hr>
+                                </div>
+
+                            </div>
+
+                            <div class="content">
+                                <ul>
+                                    <li>ID - {{ class.id }}</li>
+                                    <li>Class - {{ class.name }}</li>
+                                    <li>Timing - {{ class.timing }}</li>
+                                    <li>Staff - {{ class.staff.name }}</li>
+                                    <li>Start - {{ class.start }}</li>
+                                    <li>End - {{ class.end }}</li>
+                                </ul><hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+        <div class="columns is-multiline">
+                <div class="column is-3 is-offset-2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4">{{ class_obj.id }}|{{ class_obj.name }}</p>
+                                     <a class="button is-primary" href="{% url 'view_result_students' class_obj.id %}">Students</a>
+                                    <a class="button is-warning" href="{% url 'view_results' class_obj.id %}">View Results</a>
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <ul>
+                                    <li>ID - {{ class_obj.id }}</li>
+                                    <li>Class - {{ class_obj.name }}</li>
+                                    <li>Timing - {{ class_obj.timing }}</li>
+                                    <li>Staff - {{ class_obj.staff.name }}</li>
+                                    <li>Start - {{ class_obj.start }}</li>
+                                    <li>End - {{ class_obj.end }}</li>
+                                </ul><hr>
+                                <ol>Students : {% for student in class_obj.students.all %}<li>{{ student.name}}-{{ class.staff}}-{{ class.timing}}</li>{% endfor %}</ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+{% endif %}
+{% endblock content %}

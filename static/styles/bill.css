@@ -1,0 +1,83 @@
+*{
+    box-sizing: border-box;
+}
+.container{
+    position:absolute;
+    }
+.bill{
+    height:6in;
+    width: 12in;
+    padding:1.3rem 0 1.3rem 0;
+    box-shadow: 0 0 5px #white;
+    background-image:url("bill.jpg");
+    background-repeat:no-repeat;
+    background-size:1120px 384px;
+    border-radius:10px;
+}
+.cname{
+    text-transform:none;
+    font-size:1.7rem;
+    margin-top:0;
+    margin-left:29rem;
+    top:4.3%;
+    left:3%;
+    color:deepskyblue;
+    font-family:Niagara Solid;
+}
+
+.s-id{
+    position:absolute;
+    font-weight:200;
+    font-size:1rem;
+    margin-top:6.3rem;
+    margin-left:2rem;
+    font-family:Calibri Light;
+}
+
+.address{
+    font-size:1rem;
+    margin-top:0rem;
+    margin-left:29rem;
+    color:black;
+    font-family:Calibri Light;
+}
+.phone{
+    font-size:1rem;
+    margin-top:1rem;
+    margin-left:29rem;
+    color:black;
+    font-family:Calibri Light;
+}
+.s-name{
+    font-weight:200;
+    font-size:20px;
+    margin-top:4rem;
+    margin-left:16rem;
+    font-family:Calibri Light;
+}
+.c-fee{
+    font-weight:200;
+    font-size:15px;
+    margin-top:1.2rem;
+    margin-left:60rem;
+    font-family:Calibri Light;
+}
+
+.c-name{
+    font-weight:100;
+    font-size:18px;
+    margin-top:0rem;
+    margin-left:10rem;
+    font-family:Calibri Light;
+}
+.fee{
+    font-weight:100;
+    font-size:18px;
+    margin-top:0rem;
+    margin-left:2rem;
+    font-family:Calibri Light;
+}
+
+@page{
+    size:auto;
+}

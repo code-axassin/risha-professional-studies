@@ -1,0 +1,34 @@
+{% extends "frontpage/base.html" %}
+
+{% block content %}
+        <div class="container">
+                <h1 class="title">Add a New Staff</h1>
+            <form method="post" action="{% url 'add_staff_save' %}" role="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="field">
+                    <label class="label">Name</label>
+                    <input class="input" type="text" name="name" placeholder="Name">
+                </div>
+                <div class="field">
+                    <label class="label">Contact *numbers only!</label>
+                    <input class="input" type="text" name="contact" placeholder="Contact">
+                </div>
+                <div class="field">
+                    <label class="label">Criteria Vitae</label>
+                    <input class="file" type="file" name="cv">
+                </div>
+                <div class="field">
+                    <label class="label">Comments</label>
+                    <textarea class="input" name="comments" placeholder="Comments"></textarea>
+                </div>
+                  <div class="field">
+                    <label class="label">Profile Image</label>
+                    <input class="file" type="file" name="image">
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-primary">Add Staff</button>
+                    <a href="{% url 'all_staff' %}" class="button is-danger">Cancel</a>
+                </div>
+            </form>
+        </div>
+{% endblock content %}

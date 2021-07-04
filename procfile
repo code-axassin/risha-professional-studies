@@ -1,0 +1,1 @@
+web: gunicorn Center_Managenemt_System.wsgi --log-file -

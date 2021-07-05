@@ -52,7 +52,7 @@
 
                    <div class="select is-multiple ">
                     <label class="label">Class/Classes</label>
-                    <select multiple size="10" name="classes">
+                    <select multiple size="20" name="classes">
                         {% for class in classes %}
                             <option value="{{ class.id }}" {% if class in student.classes.all %} selected {% endif %}>{{ class.name }}|{{ class.timing }}|{{ class.staff.name }}</option>
                         {% endfor %}

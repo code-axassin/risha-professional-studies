@@ -32,7 +32,7 @@ class Students(models.Model):
 
     def save(self, *args, **kwargs):
         "Get last value of Code and Number from database, and increment before save"
-        if Students.objects.order_by('-public_id').first():
+        if self.pk ==None and Students.objects.order_by('-public_id').first():
             top = Students.objects.order_by('-public_id').first()
             if self.id == top.id:
                 top.admission_date = self.admission_date

@@ -23,3 +23,8 @@ class StudentForm(ModelForm):
         self.fields["admission_end"].widget = DateInput()
         self.fields["image"].widget = forms.ImageField()
         self.fields["active"].widget = forms.BooleanField()
+
+class EditStudentForm(ModelForm):
+    class Meta:
+        model = Students
+        fields = ['name', 'father_name', 'gender', 'contact','fee', 'father_contact', 'address','classes', 'comments', 'admission_date','admission_end', 'active']

@@ -51,6 +51,11 @@ def edit_student(request, student_id):
     }
     return render(request,"students/student_edit.html",context)
 
+
+
+
+
+
 class StudentUpdate(LoginRequiredMixin, UpdateView):
     # specify the model for create view
 

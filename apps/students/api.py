@@ -28,7 +28,7 @@ def api_add_amount(request, student_id, class_id):
     last_day_of_month = next_month - datetime.timedelta(days=next_month.day)
 
     student_obj.admission_end = last_day_of_month
-    student_obj.save()
+    student_obj.save(update_fields=["admission_date", "admission_end"])
     fees = student_obj.fee
 
     income_obj = Income.objects.create(user=request.user, student=student_obj, amount=fees, date_added=date.today())

@@ -25,7 +25,7 @@ SECRET_KEY = '&8iayql7+*$h)qsu8p2&z1u0k++-qf2bmp7ei=550^0jxb#ea_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["risha-professional-studies.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = []
 
 
 # Application definition

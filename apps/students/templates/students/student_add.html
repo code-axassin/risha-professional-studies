@@ -49,7 +49,7 @@
 
                    <div class="select is-multiple ">
                     <label class="label">Class/Classes</label>
-                    <select multiple size="8" name="classes">
+                    <select multiple size="20" name="classes">
                         {% for class in classes %}
                           <option value="{{ class.id }}">{{ class.name }}|{{ class.timing }}|{{ class.staff.name }}</option>
                         {% endfor %}
@@ -86,7 +86,6 @@
                 </div>
 
             </form>
-        </div>
 </div>
 
 {% endblock content %}
